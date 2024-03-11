@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link href="./src/output.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container h-screen w-screen bg-gradient-to-br from-green-500 to-yellow-300">
+        <nav class="h-24 w-screen flex justify-center items-center">
+            <p class="text-center text-3xl font-bold">Todo Manager</p>
+        </nav>
+
+        <form onsubmit="handleSubmit(event)" class="flex justify-center">
+            <input id="taskInput" type="text" placeholder="Enter Task Here"
+                class="bg-green-200 rounded-l-3xl px-4 py-2 outline-none w-[60%]">
+            <button type="submit" class="bg-green-200 rounded-r-3xl px-4 py-2 border-l-2 border-l-green-700 hover:bg-green-500
+                transition-transform">Add Task</button>
+        </form>
+
+        <div class="h-2/4 w-10/12 m-auto rounded-3xl bg-slate-500 mt-5 overflow-auto px-2 py-4 ">
+            <p class="text-center pb-4 text-2xl font-bold underline">Pending Tasks</p>
+            <div id="pendingTasksContainer">
+                <!-- Task elements will be added here -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        async function handleSubmit(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+
+            const taskInput = document.getElementById('taskInput');
+            const taskName = taskInput.value.trim(); // Get the value and remove leading/trailing whitespace
+
+            // Create a new task element
+            const taskDiv = document.createElement('div');
+            taskDiv.classList.add('task', 'h-auto', 'flex', 'justify-center', 'mb-5');
+
+            // Create the paragraph element to display the task name
+            const taskParagraph = document.createElement('p');
+            taskParagraph.classList.add('w-2/3', 'bg-green-200', 'rounded-l-3xl', 'pr-2', 'px-4', 'py-2');
+            taskParagraph.textContent = taskName;
+
+            // Create the "Done" button
+            const doneButton = document.createElement('button');
+            doneButton.classList.add('bg-red-400', 'rounded-r-3xl', 'px-4', 'py-2', 'border-l-2', 'border-l-red-700', 'hover:bg-red-500', 'transition-transform');
+            doneButton.textContent = 'Done';
+
+            doneButton.addEventListener('click', function () {
+                taskDiv.remove();
+            });
+
+            // Append the paragraph and button elements to the task div
+            taskDiv.appendChild(taskParagraph);
+            taskDiv.appendChild(doneButton);
+
+            // Append the task div to the pending tasks container
+            document.getElementById('pendingTasksContainer').appendChild(taskDiv);
+
+            // Clear the input field after submission
+            taskInput.value = '';
+        }
+    </script>
+</body>
+
+</html>
